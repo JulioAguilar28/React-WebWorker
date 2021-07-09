@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import './App.css'
+import { wrap } from 'comlink'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  useEffect(() => {
+    sendRequest()
+  })
+
+  const sendRequest = async () => {
+    const worker = new Worker('./workers/Resource', { type: 'module' })
+    const Resource = wrap<import('./workers/Resource').resource>(worker)
+    const resourceServer = await new Resource({
+      id: 'resource',
+      minLatency: 5000,
+      maxLatency: 10000,
+      failRate: 25,
+    })
+    console.log(await resourceServer.state)
+    for (let i = 0; i < 5; i++) {
+      resourceServer.call(i.toString())
+    }
+  }
+
+  return <div className="App"></div>
 }
 
-export default App;
+export default App
