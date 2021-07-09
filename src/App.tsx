@@ -15,9 +15,11 @@ function App() {
       minLatency: 5000,
       maxLatency: 10000,
       failRate: 25,
+      concurrency: 5,
     })
-    console.log(await resourceServer.state)
-    for (let i = 0; i < 5; i++) {
+    // resourceServer.call('julio')
+    // console.log(await resourceServer.state)
+    for (let i = 0; i < 15; i++) {
       resourceServer.call(i.toString())
     }
   }

@@ -1,5 +1,6 @@
 import { expose } from 'comlink'
 import { IResourceProps } from './Resource'
+const workerpool = require('workerpool')
 
 class ResourceWorker {
   _resource: IResourceProps
@@ -46,3 +47,11 @@ class ResourceWorker {
 export type resourceWorker = typeof ResourceWorker
 
 expose(ResourceWorker)
+
+function sum(a: number, b: number): number {
+  return a + b
+}
+
+workerpool.worker({
+  sum: sum,
+})
