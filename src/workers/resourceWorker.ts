@@ -20,6 +20,7 @@ class ResourceWorker {
     return response
   }
 
+  // ! Returns a promise with the time that a request has taken to be done
   async delay(): Promise<number> {
     const sleep = Math.round(
       Math.random() * (this._resource.maxLatency - this._resource.minLatency) +
@@ -33,6 +34,12 @@ class ResourceWorker {
     })
   }
 
+  /* 
+    ! Returns an object with the response.
+    It calculates a random number between 1 to 100.
+    If the random number is greather than resource fail rate
+    The response is the payload oterwhise the response is `duh!` indicating that it fails.
+  */
   generateResponse(reqTime: number) {
     return {
       response:

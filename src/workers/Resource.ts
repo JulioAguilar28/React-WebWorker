@@ -50,6 +50,10 @@ class Resource {
 
   async call(payload: string) {
     try {
+      /* 
+        TODO Execute the worker correctly.
+        the sum string is the name of the function registered as a worker in resourceWorker.ts file
+      */
       const result = await this.pool.exec('sum', [5, 5])
     } catch (error) {
       console.log('Error -> ' + error)
@@ -61,6 +65,7 @@ class Resource {
     // this.pool.exec('sum', [1, 3]).then((result: any) => {
     //   console.log(result)
     // })
+    // ! stats function shows the stats of the pool.
     console.log(this.pool.stats())
 
     // const worker = new Worker('./resourceWorker.ts', { type: 'module' })
